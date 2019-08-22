@@ -11,8 +11,8 @@ interface NoteDao {
     @Insert
     fun insert(note: Note)
 
-    @Update
-    fun update(note: Note)
+    @Query("SELECT * FROM notes_table WHERE id = :id ")
+    fun getById(id: String): LiveData<List<Note>>
 
     @Delete
     fun delete(note: Note)

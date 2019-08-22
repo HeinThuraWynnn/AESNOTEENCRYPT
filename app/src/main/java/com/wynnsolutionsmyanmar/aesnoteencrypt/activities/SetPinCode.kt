@@ -19,25 +19,38 @@ class SetPinCode : AppCompatActivity() {
         setContentView(R.layout.activity_set_pin_code)
         setSupportActionBar(toolbar)
         val sharedPreference: SharedPreference = SharedPreference(this)
-        val passcodeView = findViewById(R.id.passcodeView) as PasscodeView
-        sharedPreference.save("code", "1111")
         val pc = sharedPreference.getValueString("code")
-
-        passcodeView.setPasscodeLength(4).setLocalPasscode(pc.toString()).setListener(object : PasscodeView.PasscodeViewListener {
+        val passcodeView = findViewById(R.id.passcodeView) as PasscodeView
+        if (pc == null){
+            passcodeView.setPasscodeLength(4).setListener(object : PasscodeView.PasscodeViewListener {
                 override fun onFail() {
                     Toast.makeText(application, "Wrong!!", Toast.LENGTH_SHORT).show()
                 }
 
-
                 override fun onSuccess(number: String) {
+                    sharedPreference.save("code", passcodeView.getLocalPasscode().toString())
                     Toast.makeText(application, "Welcome", Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(this@SetPinCode, MainActivity::class.java)
-
                     this@SetPinCode.startActivity(intent)
                     finish()
                 }
             })
+        }else{
+            passcodeView.setPasscodeLength(4).setLocalPasscode(pc).setListener(object : PasscodeView.PasscodeViewListener {
+                override fun onFail() {
+                    Toast.makeText(application, "Wrong!!", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(number: String) {
+                    Toast.makeText(application, "Welcome User", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@SetPinCode, MainActivity::class.java)
+                    this@SetPinCode.startActivity(intent)
+                    finish()
+                }
+            })
+        }
+
+
 
         skip_pc!!.setOnClickListener {
             startActivity(Intent(this,MainActivity::class.java))

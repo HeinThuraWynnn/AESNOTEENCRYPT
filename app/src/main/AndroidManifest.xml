@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.DecryptActivity"></activity>
+        <activity android:name=".activities.UpdatePinCode"></activity>
+        <activity android:name=".activities.DecryptActivity" />
         <activity
             android:name=".activities.SetPinCode"
             android:label="@string/title_activity_set_pin_code"

@@ -24,6 +24,10 @@ class NoteRepository(application: Application) {
     fun insert(note: Note) {
         val insertNoteAsyncTask = InsertNoteAsyncTask(noteDao).execute(note)
     }
+    fun getById(note: Note){
+        val getByIdNoteAsyncTask  = GetByIdNoteAsyncTask(noteDao).execute(note)
+    }
+
 
     fun deleteAllNotes() {
         val deleteAllNotesAsyncTask = DeleteAllNotesAsyncTask(
@@ -44,6 +48,12 @@ class NoteRepository(application: Application) {
     }
 
 
+    private  class GetByIdNoteAsyncTask(noteDao: NoteDao) : AsyncTask<Note,Unit, Unit>(){
+    val noteDao = noteDao
+        override  fun doInBackground(vararg p0: Note?){
+            noteDao.getById(p0['id'])
+        }
+    }
     private class DeleteAllNotesAsyncTask(val noteDao: NoteDao) : AsyncTask<Unit, Unit, Unit>() {
 
         override fun doInBackground(vararg p0: Unit?) {

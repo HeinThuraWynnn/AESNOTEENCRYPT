@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val EDIT_NOTE_REQUEST = 1
     private lateinit var noteViewModel: NoteViewModel
     private val adapter = NoteAdapter()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +34,12 @@ class MainActivity : AppCompatActivity() {
                 ADD_NOTE_REQUEST
             )
         }
+//        recyclerView.ivEdit.setOnClickListener(
+//            startActivityForResult(
+//                Intent(this@MainActivity, DecryptActivity::class.java),
+//                EDIT_NOTE_REQUEST
+//            )
+//        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
@@ -52,6 +57,11 @@ class MainActivity : AppCompatActivity() {
             R.id.delete_all_notes -> {
                 noteViewModel.deleteAllNotes()
                 Toast.makeText(this, "All notes deleted!", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.update_pin_code -> {
+                val intent = Intent(this@MainActivity, SetPinCode::class.java)
+                this@MainActivity.startActivity(intent)
                 true
             }
             else -> {
@@ -72,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show()
         }else if( requestCode == EDIT_NOTE_REQUEST) {
+//            noteViewModel.update(id)
             Toast.makeText(this, "Note not saved!", Toast.LENGTH_SHORT).show()
 
         }
